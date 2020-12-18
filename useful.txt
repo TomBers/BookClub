@@ -1,0 +1,4 @@
+iex -S mix phx.server
+
+
+mix phx.gen.live BookClub Post posts username body parent_id:integer
