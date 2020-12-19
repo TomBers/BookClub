@@ -17,9 +17,9 @@ defmodule Bkclb.BookClub do
       [%Post{}, ...]
 
   """
-  def list_posts do
+  def list_posts(room) do
     # Repo.all(Post)
-    Repo.all(from p in Post, order_by: [asc: p.inserted_at])
+    Repo.all(from p in Post, where: p.room_id == ^room, order_by: [asc: p.inserted_at])
   end
 
   @doc """
@@ -104,12 +104,12 @@ defmodule Bkclb.BookClub do
     Post.changeset(post, attrs)
   end
 
-  def subscribe do
-    Phoenix.PubSub.subscribe(Bkclb.PubSub, "posts")
+  def subscribe(room) do
+    Phoenix.PubSub.subscribe(Bkclb.PubSub, room)
   end
 
   defp broadcast({:ok, post}, event) do
-    Phoenix.PubSub.broadcast(Bkclb.PubSub, "posts", {event, post})
+    Phoenix.PubSub.broadcast(Bkclb.PubSub, "#{post.room_id}", {event, post.room_id})
     {:ok, post}
   end
 end

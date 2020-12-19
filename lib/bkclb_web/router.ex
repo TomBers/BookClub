@@ -19,9 +19,9 @@ defmodule BkclbWeb.Router do
 
     live "/", PageLive, :index
 
-    live "/posts", PostLive.Index, :index
-    live "/posts/new", PostLive.Index, :new
-    live "/posts/new/:id", PostLive.Index, :new
+    live "/posts/room/:room", PostLive.Index, :index
+    live "/posts/new/:room", PostLive.Index, :new
+    live "/posts/new/:room/:id", PostLive.Index, :new
     live "/posts/:id/edit", PostLive.Index, :edit
 
     live "/posts/:id", PostLive.Show, :show

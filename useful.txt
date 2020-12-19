@@ -2,3 +2,5 @@ iex -S mix phx.server
 
 
 mix phx.gen.live BookClub Post posts username body parent_id:integer
+
+mix phx.gen.schema Room rooms name

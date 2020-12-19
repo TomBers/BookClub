@@ -6,37 +6,19 @@
     title: @page_title,
     action: @live_action,
     post: @post,
-    return_to: Routes.post_index_path(@socket, :index) %>
+    return_to: Routes.post_index_path(@socket, :index, @room) %>
 <% end %>
 
-<table>
-  <thead>
-    <tr>
-      <th>Username</th>
-      <th>Body</th>
-      <th>Parent</th>
-      <th>Depth</th>
+<br>
+<br>
+<div class="container mx-auto border border-indigo-500">
+  <%= for post <- @posts do %>
+    <div class="mx-<%= post.depth * 4 %>">
+      [<%= post.id %>, <%= post.parent_id %>]<%= post.body %> | <span class="uppercase tracking-wide text-sm text-indigo-500 font-semibold"><%= live_patch "New child", to: Routes.post_index_path(@socket, :new, @room, post.id) %></span>
+    </div>
+  <% end %>
+</div>
 
-      <th></th>
-    </tr>
-  </thead>
-  <tbody id="posts">
-    <%= for post <- @posts do %>
-      <tr id="post-<%= post.id %>">
-        <td><%= post.username %></td>
-        <td><%= post.body %></td>
-        <td><%= post.parent_id %></td>
-        <td><%= post.depth %></td>
-
-        <td>
-          <span><%= live_patch "New child", to: Routes.post_index_path(@socket, :new, post.id) %></span>
-          <span><%= live_redirect "Show", to: Routes.post_show_path(@socket, :show, post) %></span>
-          <span><%= live_patch "Edit", to: Routes.post_index_path(@socket, :edit, post) %></span>
-          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: post.id, data: [confirm: "Are you sure?"] %></span>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<span><%= live_patch "New Post", to: Routes.post_index_path(@socket, :new) %></span>
+<br>
+<br>
+<div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold"><%= live_patch "New Post", to: Routes.post_index_path(@socket, :new, @room) %></div>
