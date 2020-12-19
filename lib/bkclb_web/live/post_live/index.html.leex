@@ -6,7 +6,7 @@
     title: @page_title,
     action: @live_action,
     post: @post,
-    return_to: Routes.post_index_path(@socket, :index) %>
+    return_to: Routes.post_index_path(@socket, :index, @room) %>
 <% end %>
 
 <br>
@@ -14,11 +14,11 @@
 <div class="container mx-auto border border-indigo-500">
   <%= for post <- @posts do %>
     <div class="mx-<%= post.depth * 4 %>">
-      <%= post.body %> | <span class="uppercase tracking-wide text-sm text-indigo-500 font-semibold"><%= live_patch "New child", to: Routes.post_index_path(@socket, :new, post.id) %></span>
+      [<%= post.id %>, <%= post.parent_id %>]<%= post.body %> | <span class="uppercase tracking-wide text-sm text-indigo-500 font-semibold"><%= live_patch "New child", to: Routes.post_index_path(@socket, :new, @room, post.id) %></span>
     </div>
   <% end %>
 </div>
 
 <br>
 <br>
-<div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold"><%= live_patch "New Post", to: Routes.post_index_path(@socket, :new) %></div>
+<div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold"><%= live_patch "New Post", to: Routes.post_index_path(@socket, :new, @room) %></div>
