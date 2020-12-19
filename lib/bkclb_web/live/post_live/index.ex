@@ -7,8 +7,7 @@ defmodule BkclbWeb.PostLive.Index do
   @impl true
   def mount(%{"room" => room}, _session, socket) do
     if connected?(socket), do: BookClub.subscribe(room)
-    # TODO - Add assigns optimisation
-    # Pass in Room and add param to subscribe
+
     socket =
       socket
       |> assign(:posts, BuildTree.build_tree(list_posts(room)))
@@ -59,14 +58,10 @@ defmodule BkclbWeb.PostLive.Index do
     BookClub.list_posts(room)
   end
 
-  @impl
-  def handle_info({:post_created, post}, socket) do
-    room = socket.assigns.room
-
-    socket =
-      socket
-      |> assign(:posts, BuildTree.build_tree(list_posts(room)))
-
-    {:noreply, socket}
+  @impl true
+  @spec handle_info({:post_created, any}, Phoenix.LiveView.Socket.t()) ::
+          {:noreply, Phoenix.LiveView.Socket.t()}
+  def handle_info({:post_created, room}, socket) do
+    {:noreply, assign(socket, :posts, BuildTree.build_tree(list_posts(room)))}
   end
 end

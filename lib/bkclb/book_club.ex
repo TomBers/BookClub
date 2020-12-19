@@ -109,7 +109,7 @@ defmodule Bkclb.BookClub do
   end
 
   defp broadcast({:ok, post}, event) do
-    Phoenix.PubSub.broadcast(Bkclb.PubSub, "#{post.room_id}", {event, post})
+    Phoenix.PubSub.broadcast(Bkclb.PubSub, "#{post.room_id}", {event, post.room_id})
     {:ok, post}
   end
 end
