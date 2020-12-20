@@ -2,6 +2,25 @@
 @import "./phoenix.css";
 @import "../node_modules/nprogress/nprogress.css";
 
+.post-2 {  
+  margin-left: 50px;
+}
+
+.post-3 {
+  margin-left: 150px;
+}
+
+.post-4 {
+  margin-left: 200px;
+}
+
+.post-5 {
+  margin-left: 250px;
+}
+
+.hidden {
+  display: none;
+}
 
 /* LiveView specific classes for your customizations */
 .phx-no-feedback.invalid-feedback,
